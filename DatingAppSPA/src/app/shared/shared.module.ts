@@ -7,13 +7,13 @@ import { NgxGalleryModule } from 'ngx-gallery';
   imports: [
     CommonModule,
     BootstrapModule,
-    NgxGalleryModule
+    NgxGalleryModule,
   ],
   exports: [
     CommonModule,
     BootstrapModule,
-    NgxGalleryModule
+    NgxGalleryModule,
   ],
-  declarations: []
+  declarations: [  ]
 })
 export class SharedModule { }
