@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import {
-  BsDropdownModule, TabsModule, BsDatepickerModule
+  BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule
 } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
     TabsModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    PaginationModule,
+    ButtonsModule
   ],
   declarations: []
 })
