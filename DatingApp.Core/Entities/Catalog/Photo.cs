@@ -1,10 +1,10 @@
 using System;
+using DatingApp.Core.Entities.BaseEntities;
 
-namespace DatingApp.API.Models
+namespace DatingApp.Core.Entities.Catalog
 {
-    public class Photo
+    public class Photo : BaseEntity
     {
-        public int Id { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
         public DateTime DateAdded { get; set; }

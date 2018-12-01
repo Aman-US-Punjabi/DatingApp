@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DatingApp.API.Models;
+using DatingApp.Core.Entities.Catalog;
 using Newtonsoft.Json;
 
 namespace DatingApp.API.Data

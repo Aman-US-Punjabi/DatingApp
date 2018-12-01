@@ -20,6 +20,11 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using DatingApp.API.Helpers;
 using AutoMapper;
+using DatingApp.Core.Interfaces.Repositories;
+using DatingApp.Infrastructure.Repositories;
+using DatingApp.Core.Interfaces;
+using DatingApp.Infrastructure.Logging;
+using DatingApp.Infrastructure.Data;
 
 namespace DatingApp.API
 {
@@ -36,6 +41,11 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            
+            // *************************  Added Core & Infrastructure  ***************************
+            services.AddDbContext<CatalogContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            // ------------------------------------------------------------------------------------
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt => {
                     // Setting to remove error by server when server will try to serialize the user, user has photos
@@ -47,8 +57,18 @@ namespace DatingApp.API
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper();
             services.AddTransient<Seed>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IDatingRepository, DatingRepository>();
+            
+            // *************************  Added Core & Infrastructure  ***************************
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+            services.AddScoped<Data.IAuthRepository, AuthRepository>();
+            services.AddScoped<Data.IDatingRepository, DatingRepository>();
+            // ------------------------------------------------------------------------------------
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

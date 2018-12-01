@@ -1,0 +1,12 @@
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/bin/Debug/netstandard2.0/DatingApp.Infrastructure.deps.json
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/bin/Debug/netstandard2.0/DatingApp.Infrastructure.dll
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/bin/Debug/netstandard2.0/DatingApp.Infrastructure.pdb
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/bin/Debug/netstandard2.0/DatingApp.Core.dll
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/bin/Debug/netstandard2.0/DatingApp.Core.pdb
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.csprojAssemblyReference.cache
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.AssemblyInfoInputs.cache
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.AssemblyInfo.cs
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.csproj.CopyComplete
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.dll
+/Users/amandeepsingh/Projects/dotnetcore/tutorials/DatingApp/DatingApp.Infrastructure/obj/Debug/netstandard2.0/DatingApp.Infrastructure.pdb

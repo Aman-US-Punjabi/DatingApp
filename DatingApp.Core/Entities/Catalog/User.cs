@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using DatingApp.Core.Entities.BaseEntities;
 
-namespace DatingApp.API.Models
+namespace DatingApp.Core.Entities.Catalog
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
