@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using DatingApp.Core.Entities.Catalog;
+using DatingApp.Infrastructure.Data;
 using Newtonsoft.Json;
 
 namespace DatingApp.API.Data
 {
     public class Seed
     {
-        private readonly DataContext _context;
+        private readonly CatalogContext _context;
 
-        public Seed(DataContext context)
+        public Seed(CatalogContext context)
         {
             this._context = context;
         }

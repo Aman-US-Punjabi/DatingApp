@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
+using DatingApp.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,9 @@ namespace DatingApp.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly CatalogContext _context;
 
-        public ValuesController(DataContext context)
+        public ValuesController(CatalogContext context)
         {
             this._context = context;
         }

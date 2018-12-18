@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.Core.Entities.Catalog;
@@ -42,6 +43,23 @@ namespace DatingApp.Infrastructure.Repositories
         {
             return _dbContext.Photos.Where(p => p.UserId == id)
                 .FirstOrDefaultAsync(p => p.IsMain);
+        }
+
+        public async Task<IEnumerable<int>> GetUserLikes(int id, bool likers)
+        {
+            var user = await _dbContext.Users
+                .Include(x => x.Likers)
+                .Include(x => x.Likees)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (likers)
+            {
+                return user.Likers.Where(u => u.LikeeId == id).Select(i => i.LikerId);
+            }
+            else
+            {
+                return user.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
+            }
         }
     }
 }

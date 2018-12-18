@@ -1,14 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using DatingApp.Core.Entities.Catalog;
+using DatingApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Data
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly DataContext _context;
-        public AuthRepository(DataContext context)
+        private readonly CatalogContext _context;
+        public AuthRepository(CatalogContext context)
         {
             this._context = context;
 

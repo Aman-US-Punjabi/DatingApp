@@ -22,16 +22,19 @@ namespace DatingApp.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly ILikeRepository _likeRepository;
         private readonly IAppLogger<UsersController> _logger;
         private readonly IMapper _mapper;
 
         public UsersController(
             IUserRepository userRepository,
+            ILikeRepository likeRepository,
             IAppLogger<UsersController> logger,
             IMapper mapper
         )
         {
             _userRepository = userRepository;
+            _likeRepository = likeRepository;
             _logger = logger;
             _mapper = mapper;
         }
@@ -57,12 +60,27 @@ namespace DatingApp.API.Controllers
                 maxDateOfBirthFilter = DateTime.Today.AddYears(-userParams.minAge);
             }
 
+            IEnumerable<int> userLikers = null;
+            IEnumerable<int> userLikees = null;
+
+            if (userParams.Likers)
+            {
+                userLikers = await _userRepository.GetUserLikes(userParams.UserId, userParams.Likers);
+            }
+
+            if (userParams.Likees)
+            {
+                userLikees = await _userRepository.GetUserLikes(userParams.UserId, userParams.Likers);
+            }
+
             var userFilterSpecification = new UserFilterSpecification(
                 includePhotos: true,
                 gender: genderFilter,
                 excludeUserId: userFromRepo.Id,
                 minDateOfBirth: minDateOfBirthFilter, 
-                maxDateOfBirth: maxDateOfBirthFilter
+                maxDateOfBirth: maxDateOfBirthFilter,
+                userLikers: userLikers,
+                userLikees: userLikees
             );
 
             var userFilterPaginatedSpecification = new UserFilterPaginatedSpecification(
@@ -72,9 +90,10 @@ namespace DatingApp.API.Controllers
                 gender: genderFilter,
                 excludeUserId: userFromRepo.Id,
                 minDateOfBirth: minDateOfBirthFilter, 
-                maxDateOfBirth: maxDateOfBirthFilter
+                maxDateOfBirth: maxDateOfBirthFilter,
+                userLikers: userLikers,
+                userLikees: userLikees
             );
-
             // ----------------  Filter applied  -----------------
 
             var users = await _userRepository.ListAsync(userFilterPaginatedSpecification);
@@ -110,6 +129,46 @@ namespace DatingApp.API.Controllers
                 return NoContent();
             
             throw new Exception($"Updating user {id} failed on save"); 
+        }
+
+        [HttpPost("{id}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int id, int recipientId)
+        {
+            _logger.LogInformation("\n ----------------------------------- \n");
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            _logger.LogInformation("\n Here 1 \n");
+            var like = await _likeRepository.GetLike(id, recipientId);
+
+
+            _logger.LogInformation("\n Here 2 \n");
+
+            if (like != null)
+                return BadRequest("You already like this user");
+
+            _logger.LogInformation("\n Here 3 \n");
+
+            if (await _userRepository.GetByIdAsync(recipientId) == null)
+                return NotFound();
+
+            _logger.LogInformation("\n Here 4 \n");
+
+            like = new Like
+            {
+                LikerId = id,
+                LikeeId = recipientId,
+            };
+
+            _logger.LogInformation("\n Here 5 \n");
+
+            if (await _likeRepository.AddAsync(like) != null)
+                return Ok();
+
+            _logger.LogInformation("\n Here 6 \n");
+            _logger.LogInformation("\n ----------------------------------- \n");
+
+            return BadRequest("Failed to like user!");
         }
     }
 }

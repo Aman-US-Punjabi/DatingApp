@@ -4,15 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Helpers;
 using DatingApp.Core.Entities.Catalog;
+using DatingApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Data
 {
     public class DatingRepository : IDatingRepository
     {
-        private readonly DataContext _context;
+        private readonly CatalogContext _context;
 
-        public DatingRepository(DataContext context)
+        public DatingRepository(CatalogContext context)
         {
             this._context = context;
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DatingApp.Core.Entities.Catalog;
 
@@ -10,5 +11,7 @@ namespace DatingApp.Core.Interfaces.Repositories
 
         Photo GetMainPhotoByUserId(int id);
         Task<Photo> GetMainPhotoByUserIdAsync(int id);
+
+        Task<IEnumerable<int>> GetUserLikes(int id, bool likers);
     }
 }

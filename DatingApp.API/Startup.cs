@@ -40,10 +40,11 @@ namespace DatingApp.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            
             // *************************  Added Core & Infrastructure  ***************************
-            services.AddDbContext<CatalogContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<CatalogContext>(opt => opt.UseSqlite(
+                Configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("DatingApp.API")
+            ));
             // ------------------------------------------------------------------------------------
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -62,6 +63,7 @@ namespace DatingApp.API
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
