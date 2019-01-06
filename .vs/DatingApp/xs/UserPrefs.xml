@@ -1,8 +1,14 @@
 ﻿<Properties StartupConfiguration="{E465327C-2BB3-4FA5-8324-34372A8F85C1}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="DatingApp.Infrastructure/Data/CatalogContext.cs">
-    <Files>
-      <File FileName="DatingApp.Infrastructure/Data/CatalogContext.cs" Line="9" Column="26" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DatingApp" expanded="True" selected="True">
+            <Node name="DatingApp.Core" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.DatingApp.API PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

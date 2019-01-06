@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
-  BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule
+  BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule, ModalModule
 } from 'ngx-bootstrap';
 
 @NgModule({
@@ -9,14 +9,16 @@ import {
     TabsModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
     TabsModule,
     BsDatepickerModule,
     PaginationModule,
-    ButtonsModule
+    ButtonsModule,
+    ModalModule
   ],
   declarations: []
 })

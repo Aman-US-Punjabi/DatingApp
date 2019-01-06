@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class UserService {
   apiUrl = environment.apiUrl;
-  userApiUrl = this.apiUrl + 'users/';
+  userApiUrl = this.apiUrl + 'users';
 
   constructor(
     private http: HttpClient
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   getUser(userId: number): Observable<User> {
-    return this.http.get<User>(this.userApiUrl + `${userId}`);
+    return this.http.get<User>(this.userApiUrl + `/${userId}`);
   }
 
   updateUser(id: number, user: User) {
@@ -64,7 +64,7 @@ export class UserService {
   }
 
   setMainPhoto(userId: number, id: number) {
-    return this.http.post(this.userApiUrl + userId + '/photos/' + id + '/setMain', {});
+    return this.http.post(this.userApiUrl + '/' + userId + '/photos/' + id + '/setMain', {});
   }
 
   deletePhoto(userId: number, id: number) {
@@ -72,6 +72,6 @@ export class UserService {
   }
 
   sendLike(id: number, recipientId: number) {
-    return this.http.post(this.userApiUrl + id + '/like/' + recipientId, {});
+    return this.http.post(this.userApiUrl + '/' + id + '/like/' + recipientId, {});
   }
 }

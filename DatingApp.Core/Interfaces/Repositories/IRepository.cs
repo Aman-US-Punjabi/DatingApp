@@ -3,7 +3,7 @@ using DatingApp.Core.Entities.BaseEntities;
 
 namespace DatingApp.Core.Interfaces.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T>
     {
         T GetById(int id);
         T GetSingleBySpec(ISpecification<T> spec);

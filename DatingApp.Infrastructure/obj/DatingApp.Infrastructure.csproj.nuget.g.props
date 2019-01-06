@@ -12,7 +12,4 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">/usr/local/share/dotnet/sdk/NuGetFallbackFolder/microsoft.entityframeworkcore.tools/2.2.0</PkgMicrosoft_EntityFrameworkCore_Tools>
-  </PropertyGroup>
 </Project>

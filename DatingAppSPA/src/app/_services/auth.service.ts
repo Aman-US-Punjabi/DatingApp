@@ -58,4 +58,17 @@ export class AuthService {
     this.currentUser = null;
     this.router.navigate(['/home']);
   }
+
+  roleMatch(allowedRoles): boolean {
+    let isMatch = false;
+    const userRoles = this.decodedToken.role as Array<string>;
+    allowedRoles.forEach(role => {
+      if (userRoles.includes(role)) {
+        isMatch = true;
+        return;
+      }
+    });
+
+    return isMatch;
+  }
 }

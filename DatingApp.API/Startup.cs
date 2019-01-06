@@ -25,6 +25,10 @@ using DatingApp.Infrastructure.Repositories;
 using DatingApp.Core.Interfaces;
 using DatingApp.Infrastructure.Logging;
 using DatingApp.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using DatingApp.Core.Entities.Catalog;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace DatingApp.API
 {
@@ -47,7 +51,47 @@ namespace DatingApp.API
             ));
             // ------------------------------------------------------------------------------------
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+            });
+
+            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+            builder.AddEntityFrameworkStores<CatalogContext>();
+            builder.AddRoleValidator<RoleValidator<Role>>();
+            builder.AddRoleManager<RoleManager<Role>>();
+            builder.AddSignInManager<SignInManager<User>>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+                options.AddPolicy("VIPOnlyRole", policy => policy.RequireRole("VIP"));
+            });
+
+            services.AddMvc(options => 
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt => {
                     // Setting to remove error by server when server will try to serialize the user, user has photos
                     // ref, server goes to photos, photos again have User ref, which throw error because server
@@ -67,21 +111,9 @@ namespace DatingApp.API
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
-            services.AddScoped<Data.IAuthRepository, AuthRepository>();
             services.AddScoped<Data.IDatingRepository, DatingRepository>();
             // ------------------------------------------------------------------------------------
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
             services.AddScoped<LogUserActivity>();
         }
 
@@ -113,10 +145,21 @@ namespace DatingApp.API
             // app.UseHttpsRedirection();
 
             // UnComment this, if you want to seed user's data to database.
-            // seeder.SeedUsers();
+            seeder.SeedUsers();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            // MVC Route settings to handle SPA pages on refreshing browser page
+            // using FallBack Controller. If MVC didn't found the route then it will
+            // forward to the SpaFallBackRoute.
+            app.UseMvc(routes => {
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Fallback", action = "Index" }
+                );
+            });
         }
     }
 }

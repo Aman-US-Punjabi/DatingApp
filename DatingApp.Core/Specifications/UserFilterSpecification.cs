@@ -7,8 +7,8 @@ namespace DatingApp.Core.Specifications
 {
     public class UserFilterSpecification : BaseSpecification<User>
     {
-        public UserFilterSpecification(string gender, int? excludeUserId,
-            DateTime? minDateOfBirth, DateTime? maxDateOfBirth, bool includePhotos = false,
+        public UserFilterSpecification(int? excludeUserId,
+            DateTime? minDateOfBirth, DateTime? maxDateOfBirth, string gender = "",  bool includePhotos = false,
             IEnumerable<int> userLikers = null, IEnumerable<int> userLikees = null )
             : base(user => ( 
                 (String.IsNullOrEmpty(gender) || user.Gender.Equals(gender)) &&

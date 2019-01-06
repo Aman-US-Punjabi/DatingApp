@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using DatingApp.Core.Entities.BaseEntities;
+using Microsoft.AspNetCore.Identity;
 
 namespace DatingApp.Core.Entities.Catalog
 {
-    public class User : BaseEntity
+    public class User : IdentityUser<int>
     {
-        public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string  KnownAs { get; set; }
@@ -22,5 +20,6 @@ namespace DatingApp.Core.Entities.Catalog
         public ICollection<Photo> Photos { get; set; }
         public ICollection<Like> Likers { get; set; }
         public ICollection<Like> Likees { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

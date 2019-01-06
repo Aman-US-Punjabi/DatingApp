@@ -4,7 +4,7 @@ using DatingApp.Core.Entities.BaseEntities;
 
 namespace DatingApp.Core.Interfaces.Repositories
 {
-    public interface IAsyncRepository<T> where T : BaseEntity
+    public interface IAsyncRepository<T>
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();

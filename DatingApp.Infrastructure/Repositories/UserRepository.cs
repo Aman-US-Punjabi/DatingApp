@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Infrastructure.Repositories
 {
-    public class UserRepository : EfRepository<User>, IUserRepository
+    public class UserRepository : EfIdentityUserRepository<User>, IUserRepository
     {
         private readonly CatalogContext _dbContext;
 

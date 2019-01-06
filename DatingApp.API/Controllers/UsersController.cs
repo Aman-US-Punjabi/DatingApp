@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace DatingApp.API.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -112,6 +111,7 @@ namespace DatingApp.API.Controllers
             var user = await _userRepository.GetByIdWithPhotosAsync(id);
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+
             return Ok(userToReturn);
         }
 
